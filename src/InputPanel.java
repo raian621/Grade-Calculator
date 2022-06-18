@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -15,6 +14,7 @@ public class InputPanel extends JPanel {
     JButton addField;
 
     JPanel fieldPanel;
+    GridBagConstraints c;
     
     InputPanel() {
         categories = new ArrayList<>();
@@ -30,14 +30,25 @@ public class InputPanel extends JPanel {
         addField = new JButton("+");
 
         fieldPanel = new JPanel();
-        fieldPanel.setLayout(new GridLayout(0, 2, 2, 2));
+        fieldPanel.setLayout(new GridBagLayout());
+        c = new GridBagConstraints();
+        c.insets = new Insets(2, 2, 2, 2);
 
-        fieldPanel.add(category);
-        fieldPanel.add(percentage);
+        c.weightx = 0.8;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridy = 0;
+        c.gridx = 0;
+        fieldPanel.add(category, c);
+        c.gridx = 1;
+        c.weightx = 0.2;
+        fieldPanel.add(percentage, c);
 
         for (int i = 0; i < categories.size(); i++) {
-            fieldPanel.add(categories.get(i));
-            fieldPanel.add(percentages.get(i));
+            c.gridy++;
+            c.gridx = 0;
+            fieldPanel.add(categories.get(i), c);
+            c.gridx = 1;
+            fieldPanel.add(percentages.get(i), c);
         }
 
         setLayout(new BorderLayout());
@@ -51,8 +62,11 @@ public class InputPanel extends JPanel {
         categories.add(new JTextField());
         percentages.add(new JTextField());
 
-        fieldPanel.add(categories.get(categories.size() - 1));
-        fieldPanel.add(percentages.get(percentages.size() - 1));
+        c.gridy++;
+        c.gridx = 0;
+        fieldPanel.add(categories.get(categories.size() - 1), c);
+        c.gridx = 1;
+        fieldPanel.add(percentages.get(percentages.size() - 1), c);
 
         revalidate();
     }
@@ -68,7 +82,7 @@ public class InputPanel extends JPanel {
         return result;
     }
 
-    public List<Double> getGrades() throws NumberFormatException {
+    public List<Double> getPercentages() throws NumberFormatException {
         List<Double> result = new ArrayList<>();
         
         for (int i = 0; i < percentages.size(); i++) {
