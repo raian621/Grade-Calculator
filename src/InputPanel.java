@@ -9,8 +9,8 @@ public class InputPanel extends JPanel {
     JLabel category;
     JLabel percentage;
 
-    ArrayList<JTextField> categories;
-    ArrayList<JTextField> percentages;
+    List<JTextField> categories;
+    List<JTextField> percentages;
     JButton addField;
 
     JPanel fieldPanel;
