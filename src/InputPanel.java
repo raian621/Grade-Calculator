@@ -34,6 +34,7 @@ public class InputPanel extends JPanel {
         c = new GridBagConstraints();
         c.insets = new Insets(2, 2, 2, 2);
 
+        // add column labels
         c.weightx = 0.8;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridy = 0;
@@ -43,6 +44,7 @@ public class InputPanel extends JPanel {
         c.weightx = 0.2;
         fieldPanel.add(percentage, c);
 
+        // add input fields
         for (int i = 0; i < categories.size(); i++) {
             c.gridy++;
             c.gridx = 0;
@@ -88,7 +90,13 @@ public class InputPanel extends JPanel {
         for (int i = 0; i < percentages.size(); i++) {
             String per = percentages.get(i).getText();
             if (!per.equals("") && per != null)
-                result.add(Double.parseDouble(per));
+                try {
+                    result.add(Double.parseDouble(per));
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, String.format("Invalid number at percentage [%d].", i + 1), 
+                                "Invalid input", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
         }
         return result;
     }

@@ -1,15 +1,14 @@
-import java.awt.BorderLayout;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.swing.*;
 
 public class PromptWindow extends JFrame {
 
-    InputPanel inputPanel;
-    JScrollPane inputViewer;
-    JButton submit;
-    JButton clear;
+    private InputPanel inputPanel;
+    private JScrollPane inputViewer;
+    private JButton submit;
+    private JButton clear;
 
     PromptWindow() {
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -56,15 +55,21 @@ public class PromptWindow extends JFrame {
     }
 
     private boolean checkInput(List<String> categories, List<Double> percentages) {
-        if (categories.size() != percentages.size())
+        if (categories.size() != percentages.size()) {
+            JOptionPane.showMessageDialog(null, "Lengths of \"Grades\" and \"Categories\" do not match.", 
+                "Invalid input", JOptionPane.ERROR_MESSAGE);
             return false;
+        }
 
         double total = 0.0;
 
         for (Double d : percentages)
             total += d;
-        if (total < 100.0 || total > 100.01)
+        if (total < 100.0 || total > 100.01) {
+            JOptionPane.showMessageDialog(null, "Total percentage out of range. Please check yout input.", 
+                "Invalid input", JOptionPane.ERROR_MESSAGE);
             return false;
+        }
     
         return true;
     }

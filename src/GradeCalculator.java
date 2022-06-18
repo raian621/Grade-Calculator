@@ -7,10 +7,14 @@ public class GradeCalculator extends JFrame {
     private static GradeCalculator gradeCalculator = null;
     private List<String> categories;
     private List<Double> percentages;
+    private GradesPanel gradesPanel;
 
     private GradeCalculator(List<String> categories, List<Double> percentages) {
         this.categories = categories;
         this.percentages = percentages;
+
+        gradesPanel = new GradesPanel(categories);
+        add(gradesPanel);
 
         setTitle("Grade Calculator");
         setSize(800, 500);
