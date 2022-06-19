@@ -8,14 +8,19 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class GradeCalculator extends JFrame {
 
     private static GradeCalculator gradeCalculator = null;
     private List<CategoryPanel> categoryPanels;
+    private List<Double> percentages;
+    private JLabel gradeLabel;
 
     private GradeCalculator(List<String> categories, List<Double> percentages) {
         setLayout(new BorderLayout());
+        this.percentages = percentages;
+        this.gradeLabel = new JLabel("0");
 
         categoryPanels = new ArrayList<>();
         JPanel categoryWrapper = new JPanel(new GridBagLayout());
@@ -35,7 +40,9 @@ public class GradeCalculator extends JFrame {
             categoryWrapper.add(sp, gbc);
             categoryPanels.add(cp);
         }
+
         JScrollPane sp = new JScrollPane(categoryWrapper);
+        add(gradeLabel, BorderLayout.NORTH);
         add(sp, BorderLayout.CENTER);
 
         setTitle("Grade Calculator");
@@ -45,13 +52,20 @@ public class GradeCalculator extends JFrame {
         setLocationRelativeTo(null);
     }
 
+    public static void updateGrade() {
+        double grade = 0.0;
+
+        for (int i = 0; i < gradeCalculator.categoryPanels.size(); i++) {
+            grade += gradeCalculator.categoryPanels.get(i).getGradeRatio()
+                * gradeCalculator.percentages.get(i);
+        }
+        gradeCalculator.gradeLabel.setText(Double.toString(grade));
+        gradeCalculator.revalidate();
+    }
+
     public static GradeCalculator getGradeCalculator(List<String> categories, List<Double> percentages) {
         if (gradeCalculator == null)
             gradeCalculator = new GradeCalculator(categories, percentages);
-        return gradeCalculator;
-    }
-
-    public static GradeCalculator getGradeCalculator() {
         return gradeCalculator;
     }
 

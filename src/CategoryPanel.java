@@ -2,6 +2,11 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +52,29 @@ public class CategoryPanel extends JPanel {
         c.gridy++;
         JTextField earnedField = new JTextField();
         JTextField potentialField = new JTextField();
+
+        earnedField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {}
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                updateGradeRatio();                
+                GradeCalculator.updateGrade();                
+            }
+        });
+
+        potentialField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {}
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                updateGradeRatio();                
+                GradeCalculator.updateGrade();                
+            }
+        });
+
         earnedPoints.add(earnedField);
         potentialPoints.add(potentialField);
         c.fill = GridBagConstraints.HORIZONTAL;
