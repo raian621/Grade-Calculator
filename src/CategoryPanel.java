@@ -59,7 +59,6 @@ public class CategoryPanel extends JPanel {
         c.gridx = 2;
         c.weightx = 0.5;
         fieldPanel.add(potentialField, c);
-
         revalidate();
     }
 
